@@ -1,8 +1,8 @@
 # Perplexity Scraper
 
-[![Perplexity scraper by cloro](https://github.com/cloro-dev/perplexity-scraper/blob/main/perplexity-scraper-hero-image.png)](https://cloro.dev/perplexity/?utm_source=github.com)
+[![Perplexity scraper by cloro](https://github.com/cloro-dev/perplexity-scraper/blob/main/perplexity-scraper-hero-image.png)](https://cloro.dev/perplexity/?utm_source=github)
 
-[![cloro](https://img.shields.io/badge/Powered%20by-Cloro-blue?style=for-the-badge)](https://cloro.dev/)
+[![cloro](https://img.shields.io/badge/Powered%20by-cloro-blue?style=for-the-badge)](https://cloro.dev/)
 
 The [Perplexity Scraper](https://cloro.dev/perplexity/) by cloro enables developers to programmatically interact with Perplexity AI and automatically collect AI-powered search responses along with structured metadata. Instead of manual data collection, you can retrieve results as parsed JSON, raw HTML, or other formats for seamless integration into your workflows.
 
@@ -92,6 +92,7 @@ axios
 | `prompt`\*         | The search query or question to ask Perplexity (1-10,000 characters)        | –             |
 | `country`          | Optional country/region code for localized results (e.g., `US`, `GB`, `DE`) | `US`          |
 | `include.markdown` | Include response in Markdown format when set to true                        | `false`       |
+| `include.html`     | Include URL to full HTML response when set to true (URL expires after 48h)  | `false`       |
 
 \* Mandatory parameters
 
@@ -122,7 +123,7 @@ The Perplexity Scraper API returns a structured JSON object containing Perplexit
         "description": "Practical quantum computing applications emerge in drug discovery and materials science..."
       }
     ],
-    "html": "<div>Recent developments in quantum computing include...</div>",
+    "html": "https://storage.cloro.dev/results/c45a5081-808d-4ed3-9c86-e4baf16c8ab8/page-1.html", // URL expires after 48 hours
     "markdown": "**Recent developments in quantum computing** include breakthrough error correction methods..."
   }
 }
@@ -141,12 +142,12 @@ The Perplexity endpoint automatically detects different types of queries and ext
 
 The endpoint automatically analyzes your query to determine intent:
 
-| Query Type | Detected Intent | Extracted Data |
-| ---------- | --------------- | -------------- |
-| Shopping | E-commerce and product searches | Shopping cards with product details |
-| Travel | Hotels, destinations, locations | Hotel listings, places, coordinates |
-| Media | Images, videos, visual content | Media items with thumbnails and metadata |
-| General | Informational searches | Text response with sources |
+| Query Type | Detected Intent                 | Extracted Data                           |
+| ---------- | ------------------------------- | ---------------------------------------- |
+| Shopping   | E-commerce and product searches | Shopping cards with product details      |
+| Travel     | Hotels, destinations, locations | Hotel listings, places, coordinates      |
+| Media      | Images, videos, visual content  | Media items with thumbnails and metadata |
+| General    | Informational searches          | Text response with sources               |
 
 ### Shopping cards (when shopping intent detected)
 
@@ -243,7 +244,7 @@ For travel queries, extract hotel and place information:
         "image_url": "https://example.com/hotel.jpg",
         "images": ["https://example.com/room1.jpg"],
         "lat": 40.7128,
-        "lng": -74.0060,
+        "lng": -74.006,
         "price_level": "$$$",
         "categories": ["Hotel", "Accommodation"]
       }
@@ -255,7 +256,7 @@ For travel queries, extract hotel and place information:
         "address": ["456 Oak Ave", "City, State"],
         "rating": 4.7,
         "lat": 40.7128,
-        "lng": -74.0060,
+        "lng": -74.006,
         "categories": ["Restaurant", "Tourist Attraction"],
         "map_url": "https://maps.google.com/example",
         "images": ["https://example.com/place.jpg"]
@@ -269,10 +270,10 @@ For travel queries, extract hotel and place information:
 
 The response also includes:
 
-| Field                          | Type   | Description                                                    |
-| ------------------------------ | ------ | -------------------------------------------------------------- |
-| `result.related_queries`       | array  | Suggested follow-up search queries                             |
-| `result.search_model_queries`  | array  | Internal search queries used to generate response              |
+| Field                         | Type  | Description                                       |
+| ----------------------------- | ----- | ------------------------------------------------- |
+| `result.related_queries`      | array | Suggested follow-up search queries                |
+| `result.search_model_queries` | array | Internal search queries used to generate response |
 
 Each search model query includes the actual query, engine type, and result limit.
 
@@ -341,10 +342,19 @@ For detailed documentation, advanced features, and integration guides, visit:
 - **API documentation:** [docs.cloro.dev](https://docs.cloro.dev)
 - **Perplexity scraper page:** [cloro.dev/perplexity](https://cloro.dev/perplexity/)
 
+## Other available scrapers
+
+- **[AI Mode](https://cloro.dev/ai-mode/)** - Extracts structured data from Google AI Mode for general knowledge queries, workflow optimization, and technical guidance.
+- **[AI Overview](https://cloro.dev/ai-overview/)** - Extracts structured data from Google AI Overview for comprehensive search result analysis and AI-curated insights.
+- **[ChatGPT](https://cloro.dev/chatgpt/)** - Extracts structured data from ChatGPT with advanced features including shopping cards, raw response data, and query fan-out.
+- **[Copilot](https://cloro.dev/copilot/)** - Extracts structured data from Microsoft Copilot for development tools, Microsoft ecosystem research, and enterprise-focused queries.
+- **[Google](https://cloro.dev/google-search/)** - Extracts structured data from Google Search results, including organic results, People Also Ask questions, related searches, and optional AI Overview data.
+- **[Perplexity](https://cloro.dev/perplexity/)** - Extracts comprehensive structured data from Perplexity AI with real-time web sources, automatically detecting and extracting rich data objects.
+
 ## Contact us
 
 If you have questions or need support, reach out to us on [our contact page](https://cloro.dev/contact).
 
 ---
 
-_Built with ❤️ by the cloro team_
+Built with ❤️ by the cloro team
