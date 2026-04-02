@@ -87,12 +87,13 @@ axios
 
 ### Request parameters
 
-| Parameter          | Description                                                                 | Default value |
-| ------------------ | --------------------------------------------------------------------------- | ------------- |
-| `prompt`\*         | The search query or question to ask Perplexity (1-10,000 characters)        | –             |
-| `country`          | Optional country/region code for localized results (e.g., `US`, `GB`, `DE`) | `US`          |
-| `include.markdown` | Include response in Markdown format when set to true                        | `false`       |
-| `include.html`     | Include URL to full HTML response when set to true (URL expires after 48h)  | `false`       |
+| Parameter             | Description                                                                 | Default value |
+| --------------------- | --------------------------------------------------------------------------- | ------------- |
+| `prompt`\*            | The search query or question to ask Perplexity (1-10,000 characters)        | –             |
+| `country`             | Optional country/region code for localized results (e.g., `US`, `GB`, `DE`) | `US`          |
+| `include.markdown`    | Include response in Markdown format when set to true                        | `false`       |
+| `include.html`        | Include URL to full HTML response when set to true (URL expires after 24h)  | `false`       |
+| `include.rawResponse` | Include raw streaming response events for debugging                         | `false`       |
 
 \* Mandatory parameters
 
@@ -123,7 +124,7 @@ The Perplexity Scraper API returns a structured JSON object containing Perplexit
         "description": "Practical quantum computing applications emerge in drug discovery and materials science..."
       }
     ],
-    "html": "https://storage.cloro.dev/results/c45a5081-808d-4ed3-9c86-e4baf16c8ab8/page-1.html", // URL expires after 48 hours
+    "html": "https://storage.cloro.dev/results/c45a5081-808d-4ed3-9c86-e4baf16c8ab8/page-1.html", // URL expires after 24 hours
     "markdown": "**Recent developments in quantum computing** include breakthrough error correction methods..."
   }
 }
@@ -339,22 +340,24 @@ Yes, you can specify country codes like `US`, `GB`, `DE`, `JP`, `CN`, `IN`, `BR`
 
 For detailed documentation, advanced features, and integration guides, visit:
 
-- **API documentation:** [docs.cloro.dev](https://docs.cloro.dev)
+- **API documentation:** [docs.cloro.dev](https://docs.cloro.dev/)
 - **Perplexity scraper page:** [cloro.dev/perplexity](https://cloro.dev/perplexity/)
 
 ## Other available scrapers
 
 - **[AI Mode](https://cloro.dev/ai-mode/)** - Extracts structured data from Google AI Mode for general knowledge queries, workflow optimization, and technical guidance.
 - **[AI Overview](https://cloro.dev/ai-overview/)** - Extracts structured data from Google AI Overview for comprehensive search result analysis and AI-curated insights.
-- **[Gemini](https://cloro.dev/gemini/)** - Extracts structured data from Google Gemini for complex reasoning, content generation, and source confidence scoring.
 - **[ChatGPT](https://cloro.dev/chatgpt/)** - Extracts structured data from ChatGPT with advanced features including shopping cards, raw response data, and query fan-out.
 - **[Copilot](https://cloro.dev/copilot/)** - Extracts structured data from Microsoft Copilot for development tools, Microsoft ecosystem research, and enterprise-focused queries.
-- **[Google](https://cloro.dev/google-search/)** - Extracts structured data from Google Search results, including organic results, People Also Ask questions, related searches, and optional AI Overview data.
+- **[Gemini](https://cloro.dev/gemini/)** - Extracts structured data from Google Gemini for complex reasoning, content generation, and source confidence scoring.
+- **[Google Search](https://cloro.dev/google-search/)** - Extracts structured data from Google Search results, including organic results, People Also Ask questions, related searches, and optional AI Overview data.
+- **[Google News](https://cloro.dev/google-news/)** - Extracts structured news articles from Google News with titles, snippets, sources, dates, and thumbnail images for news monitoring and media tracking.
+- **[Grok](https://cloro.dev/grok/)** - Extracts structured data from Grok for current events, news tracking, and real-time information gathering.
 - **[Perplexity](https://cloro.dev/perplexity/)** - Extracts comprehensive structured data from Perplexity AI with real-time web sources, automatically detecting and extracting rich data objects.
 
 ## Contact us
 
-If you have questions or need support, reach out to us on [our contact page](https://cloro.dev/contact).
+If you have questions or need support, reach out to us at [support@cloro.dev](mailto:support@cloro.dev).
 
 ---
 
