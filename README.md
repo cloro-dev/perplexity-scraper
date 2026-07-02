@@ -4,9 +4,9 @@
 
 [![cloro](https://img.shields.io/badge/Powered%20by-cloro-blue?style=for-the-badge)](https://cloro.dev/)
 
-The [Perplexity Scraper](https://cloro.dev/perplexity/) by cloro enables developers to programmatically interact with Perplexity AI and automatically collect AI-powered search responses along with structured metadata. Instead of manual data collection, you can retrieve results as parsed JSON, raw HTML, or other formats for seamless integration into your workflows.
+The [Perplexity Scraper](https://cloro.dev/perplexity/) by cloro lets developers programmatically interact with Perplexity AI and collect AI-powered search responses along with structured metadata. Instead of manual data collection, you can retrieve results as parsed JSON, raw HTML, or other formats for integration into your workflows.
 
-You can use cloro's Perplexity Scraper for current events monitoring, news tracking, research automation, and competitive analysis. It handles dynamic AI-generated content, supports real-time extraction, and eliminates the need to manage authentication, sessions, or anti-bot systems.
+You can use cloro's Perplexity Scraper for current events monitoring, news tracking, research automation, and competitive analysis. It handles dynamic AI-generated content, supports real-time extraction, and removes the need to manage authentication, sessions, or anti-bot systems.
 
 ## How it works
 
@@ -91,6 +91,7 @@ axios
 | --------------------- | --------------------------------------------------------------------------- | ------------- |
 | `prompt`\*            | The search query or question to ask Perplexity (1-10,000 characters)        | –             |
 | `country`             | Optional country/region code for localized results (e.g., `US`, `GB`, `DE`) | `US`          |
+| `state`               | Optional US state code for state-level geo-targeting (e.g., `CA`, `TX`, `NY`). Only valid when `country` is `US`. See [supported codes](https://api.cloro.dev/v1/states?country=US). | –             |
 | `include.markdown`    | Include response in Markdown format when set to true                        | `false`       |
 | `include.html`        | Include URL to full HTML response when set to true (URL expires after 24h)  | `false`       |
 | `include.rawResponse` | Include raw streaming response events for debugging                         | `false`       |
@@ -130,13 +131,13 @@ The Perplexity Scraper API returns a structured JSON object containing Perplexit
 }
 ```
 
-## Comprehensive structured data extraction
+## Structured data extraction
 
-The Perplexity endpoint automatically detects different types of queries and extracts rich structured data based on search intent:
+The Perplexity endpoint automatically detects different types of queries and extracts structured data based on search intent:
 
 - **Shopping queries**: Product information, pricing, and shopping cards
 - **Travel queries**: Hotel listings, places, and location data
-- **Media queries**: Videos and images relevant to the search
+- **Media queries**: Videos and images related to the search
 - **General queries**: Standard web search with sources and citations
 
 ### Query intent detection
@@ -170,6 +171,7 @@ When shopping intent is detected, the response includes:
             "numReviews": 1250,
             "imageUrls": ["https://example.com/image1.jpg"],
             "merchant": "Store Name",
+            "available": true,
             "id": "product_123",
             "variants": [
               {
@@ -179,9 +181,15 @@ When shopping intent is detected, the response includes:
             ],
             "offers": [
               {
+                "url": "https://example.com/offer?utm_source=Perplexity&utm_medium=referral",
                 "price": "$99.99",
-                "merchant": "Store Name",
-                "url": "https://example.com/offer"
+                "available": true,
+                "product_name": "Product Name",
+                "merchant_name": "Store Name",
+                "original_price": "$149.99",
+                "price_details": {
+                  "display_price": "$99.99"
+                }
               }
             ]
           }
@@ -289,6 +297,21 @@ Perplexity integrates with real-time web sources, providing current and up-to-da
 | `label`       | string  | Source name or publication                    |
 | `description` | string  | Brief description of what the source contains |
 
+### Citation pills array structure
+
+When the Perplexity answer carries bracketed citations (e.g. `[1][2][3]`), the `result.citationPills` array exposes each cited source as a self-contained entry. When a pill cites N sources, the array contains N entries sharing the same `citationPillId` but with per-source `label`, `url`, and `domain`. Group by `citationPillId` to recover pill-level structure. The field is omitted when no pills are present.
+
+| Field            | Type    | Description                                                                                                                                                                                       |
+| ---------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `label`          | string  | Per-source title from the sources rail (e.g. `"Best Programming Laptops 2026 — TechCrunch"`). Always present; may be an empty string when the rail has no title for this source — read `domain` / `url` for source identity in that case. |
+| `citationPillId` | integer | 1-based ordinal shared by all entries from the same chip.                                                         |
+| `url`            | string  | Direct URL of the cited source.                                                                                   |
+| `domain`         | string  | Host extracted from `url`, for grouping and display.                                                              |
+| `description`    | string  | Source snippet when present. Omitted when absent.                                                                 |
+| `position`       | integer | 1-based position of this source in the sibling `result.sources` array.                                            |
+
+Perplexity splits YouTube citations into their own chip even when grouped with non-YouTube citations in the visible text — `[1][2]` where source 2 is YouTube becomes two separate pills with distinct `citationPillId` values.
+
 ## Practical Perplexity scraper use cases
 
 1. **E-commerce monitoring:** Track product pricing, availability, and merchant offers across shopping queries.
@@ -302,7 +325,7 @@ Perplexity integrates with real-time web sources, providing current and up-to-da
 
 ## Why choose cloro?
 
-- **Simple integration:** Clean API design with comprehensive documentation and examples.
+- **Simple integration:** API design with documentation and examples.
 - **Reliable performance:** >99% uptime and low latencies (P50 < 30s, P90 < 60s)
 - **No infrastructure hassle:** We handle rate limiting and browser management.
 - **Real-time data:** Access to current information with automatic source attribution.
@@ -321,8 +344,8 @@ cloro's Perplexity endpoint provides reliable access to Perplexity's AI-powered 
 - **Real-time web source integration** for current information and breaking news
 - **Automatic source attribution** for verification and credibility
 - **Query intent detection** that automatically extracts shopping cards, media content, and travel data
-- **Comprehensive structured data extraction** for seamless integration into your workflows
-- **Multi-format responses** including text, HTML, markdown, and rich structured objects
+- **Structured data extraction** for integration into your workflows
+- **Multi-format responses** including text, HTML, markdown, and structured objects
 
 ### What's the recommended timeout for requests?
 
@@ -330,7 +353,7 @@ We don't recommend putting any timeout, given that our system retries automatica
 
 ### How current is the information from Perplexity?
 
-Perplexity provides real-time access to current information and breaking news through its web integration, making it ideal for monitoring current events and recent developments in any field.
+Perplexity provides real-time access to current information and breaking news through its web integration. This works for monitoring current events and recent developments in any field.
 
 ### Does the API support different countries?
 
@@ -340,20 +363,20 @@ Yes, you can specify country codes like `US`, `GB`, `DE`, `JP`, `CN`, `IN`, `BR`
 
 For detailed documentation, advanced features, and integration guides, visit:
 
-- **API documentation:** [docs.cloro.dev](https://docs.cloro.dev/)
+- **API documentation:** [cloro.dev/docs](https://cloro.dev/docs/)
 - **Perplexity scraper page:** [cloro.dev/perplexity](https://cloro.dev/perplexity/)
 
 ## Other available scrapers
 
 - **[AI Mode](https://cloro.dev/ai-mode/)** - Extracts structured data from Google AI Mode for general knowledge queries, workflow optimization, and technical guidance.
-- **[AI Overview](https://cloro.dev/ai-overview/)** - Extracts structured data from Google AI Overview for comprehensive search result analysis and AI-curated insights.
-- **[ChatGPT](https://cloro.dev/chatgpt/)** - Extracts structured data from ChatGPT with advanced features including shopping cards, raw response data, and query fan-out.
+- **[AI Overview](https://cloro.dev/ai-overview/)** - Extracts structured data from Google AI Overview for search result analysis and AI-curated insights.
+- **[ChatGPT](https://cloro.dev/chatgpt/)** - Extracts structured data from ChatGPT with features including shopping cards, raw response data, and query fan-out.
 - **[Copilot](https://cloro.dev/copilot/)** - Extracts structured data from Microsoft Copilot for development tools, Microsoft ecosystem research, and enterprise-focused queries.
 - **[Gemini](https://cloro.dev/gemini/)** - Extracts structured data from Google Gemini for complex reasoning, content generation, and source confidence scoring.
 - **[Google Search](https://cloro.dev/google-search/)** - Extracts structured data from Google Search results, including organic results, People Also Ask questions, related searches, and optional AI Overview data.
 - **[Google News](https://cloro.dev/google-news/)** - Extracts structured news articles from Google News with titles, snippets, sources, dates, and thumbnail images for news monitoring and media tracking.
 - **[Grok](https://cloro.dev/grok/)** - Extracts structured data from Grok for current events, news tracking, and real-time information gathering.
-- **[Perplexity](https://cloro.dev/perplexity/)** - Extracts comprehensive structured data from Perplexity AI with real-time web sources, automatically detecting and extracting rich data objects.
+- **[Perplexity](https://cloro.dev/perplexity/)** - Extracts structured data from Perplexity AI with real-time web sources, automatically detecting and extracting data objects.
 
 ## Contact us
 
