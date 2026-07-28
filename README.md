@@ -1,12 +1,28 @@
-# Perplexity Scraper
+# Perplexity Scraper API — Real-Time Web Sources & Citation Data
 
 [![Perplexity scraper by cloro](https://github.com/cloro-dev/perplexity-scraper/blob/main/perplexity-scraper-hero-image.png)](https://cloro.dev/perplexity/?utm_source=github)
 
 [![cloro](https://img.shields.io/badge/Powered%20by-cloro-blue?style=for-the-badge)](https://cloro.dev/)
 
-The [Perplexity Scraper](https://cloro.dev/perplexity/) by cloro lets developers programmatically interact with Perplexity AI and collect AI-powered search responses along with structured metadata. Instead of manual data collection, you can retrieve results as parsed JSON, raw HTML, or other formats for integration into your workflows.
+Scrape Perplexity AI responses via API. Returns parsed JSON with the full response text and markdown, **real-time web sources**, **citation pills**, and automatically-detected structured data objects. Python, cURL, and Node.js examples below.
 
-You can use cloro's Perplexity Scraper for current events monitoring, news tracking, research automation, and competitive analysis. It handles dynamic AI-generated content, supports real-time extraction, and removes the need to manage authentication, sessions, or anti-bot systems.
+Built for developers doing AI brand monitoring on Perplexity, real-time news and events tracking, source-attribution research, and competitive analysis — without managing CAPTCHAs, rotating proxies, session state, or Perplexity's anti-bot defenses.
+
+## Quick start
+
+1. Get an API key at [cloro.dev](https://cloro.dev/?utm_source=github&utm_medium=readme).
+2. Send a request:
+
+   ```bash
+   curl -X POST https://api.cloro.dev/v1/monitor/perplexity \
+     -H "Authorization: Bearer YOUR_API_KEY" \
+     -H "Content-Type: application/json" \
+     -d '{"prompt": "Latest developments in solid-state batteries this week"}'
+   ```
+
+3. Parse the returned JSON — `result.text`, `result.markdown`, `result.citationPills[]`, `result.sources[]`.
+
+Full examples in Python, cURL, and Node.js below.
 
 ## How it works
 
@@ -284,7 +300,7 @@ The response also includes:
 | `result.related_queries`      | array | Suggested follow-up search queries                |
 | `result.search_model_queries` | array | Internal search queries used to generate response |
 
-Each search model query includes the actual query, engine type, and result limit.
+Each entry in `search_model_queries` is the search query string the model used.
 
 ### Real-time web sources
 
@@ -380,7 +396,7 @@ For detailed documentation, advanced features, and integration guides, visit:
 
 ## Contact us
 
-If you have questions or need support, reach out to us at [support@cloro.dev](mailto:support@cloro.dev).
+If you have questions or need support, join our community at [r/cloroapi](https://www.reddit.com/r/cloroapi/).
 
 ---
 
