@@ -50,7 +50,7 @@ Node.js and async/webhook examples are in the [endpoint documentation](https://c
 | Parameter | Description | Default |
 | --- | --- | --- |
 | `prompt`\* | The query or question (1-10,000 characters) | – |
-| `country` | Country code for localized results (`US`, `GB`, `DE`) | `US` |
+| `country`\* | Country code for localized results (`US`, `GB`, `DE`) | – |
 | `state` | US state code for finer localization | – |
 | `include.markdown` | Return the answer as Markdown | `false` |
 | `include.html` | Return a URL to the full HTML (expires after 24h) | `false` |
@@ -81,7 +81,8 @@ Alongside `text` and `markdown`:
 2. **`related_queries`** — the follow-up questions Perplexity offers, which map the neighbourhood of a topic.
 3. **`search_model_queries`** — the searches Perplexity actually ran. These differ from the user prompt and are the closest thing to seeing the model's retrieval step.
 4. **`citationPills`** — inline citation chips where the answer carries them.
-5. **`rawResponse`** — the unparsed upstream payload.
+5. **`videos`**, **`images`**, **`places`**, **`hotels`** and **`shopping_cards`** — media, local and product blocks, filled when the answer carries them.
+6. **`rawResponse`** — the unparsed upstream payload.
 
 Full field-level schemas are in the [endpoint reference](https://cloro.dev/docs/api-reference/endpoint/monitor-perplexity).
 
@@ -121,4 +122,4 @@ Yes, via `country` and `state`. Answers and cited sources differ by region on lo
 
 ## Contact us
 
-Questions or support: [r/cloroapi](https://www.reddit.com/r/cloroapi/).
+Questions or support: [ask the docs AI assistant](https://cloro.dev/docs/?assistant).
