@@ -4,7 +4,7 @@
 
 [![cloro](https://img.shields.io/badge/Powered%20by-cloro-blue?style=for-the-badge)](https://cloro.dev/)
 
-The [Perplexity scraper](https://cloro.dev/perplexity/?utm_source=github) by cloro returns Perplexity answers as structured JSON: the answer text and markdown, every cited web source with position and label, the related queries Perplexity suggests, and the search-model queries it ran to build the answer.
+The [Perplexity scraper](https://cloro.dev/perplexity/?utm_source=github) by cloro is an API that returns the Perplexity answers and sources its UI shows, as structured JSON: the answer text and markdown, every cited web source with position and label, the related queries Perplexity suggests, and the search-model queries it ran to build the answer.
 
 ## How do you scrape Perplexity?
 
@@ -77,27 +77,27 @@ Node.js and async/webhook examples are in the [endpoint documentation](https://c
 
 Alongside `text` and `markdown`:
 
-1. **`sources`** — every cited URL with position, label and description. Position matters: a source cited first is weighted differently by readers than one cited eighth.
-2. **`related_queries`** — the follow-up questions Perplexity offers, which map the neighbourhood of a topic.
-3. **`search_model_queries`** — the searches Perplexity actually ran. These differ from the user prompt and are the closest thing to seeing the model's retrieval step.
-4. **`citationPills`** — inline citation chips where the answer carries them.
-5. **`videos`**, **`images`**, **`places`**, **`hotels`** and **`shopping_cards`** — media, local and product blocks, filled when the answer carries them.
-6. **`rawResponse`** — the unparsed upstream payload.
+1. **`sources`**: every cited URL with position, label and description. Position matters: a source cited first is weighted differently by readers than one cited eighth.
+2. **`related_queries`**: the follow-up questions Perplexity offers, which map the neighbourhood of a topic.
+3. **`search_model_queries`**: the searches Perplexity actually ran. These differ from the user prompt and are the closest thing to seeing the model's retrieval step.
+4. **`citationPills`**: inline citation chips where the answer carries them.
+5. **`videos`**, **`images`**, **`places`**, **`hotels`** and **`shopping_cards`**: media, local and product blocks, filled when the answer carries them.
+6. **`rawResponse`**: the unparsed upstream payload.
 
 Full field-level schemas are in the [endpoint reference](https://cloro.dev/docs/api-reference/endpoint/monitor-perplexity).
 
 ## Use cases
 
-- **Citation tracking** — which domains Perplexity reaches for on your category's questions.
-- **Brand monitoring** — whether you are named, and in what position among the sources.
-- **Content gap analysis** — the `search_model_queries` show what the model looked for and did not find on your site.
-- **Competitive research** — the source list on a buyer question is a ranked list of who is winning that question.
+- **Citation tracking**: which domains Perplexity reaches for on your category's questions.
+- **Brand monitoring**: whether you are named, and in what position among the sources.
+- **Content gap analysis**: the `search_model_queries` show what the model looked for and did not find on your site.
+- **Competitive research**: the source list on a buyer question is a ranked list of who is winning that question.
 
 ## FAQ
 
-### How is this different from the Perplexity API?
+### Is there an API that returns Perplexity's UI answer rather than its model API?
 
-The official API answers a prompt with a model. This returns what the Perplexity product shows a user, including the cited source list and the related queries, which the API does not expose the same way.
+Yes. cloro returns what the Perplexity product shows a user, including the cited source list and the related queries. The official Perplexity API answers a prompt with a model and does not expose them the same way.
 
 ### What are search-model queries?
 
@@ -118,7 +118,7 @@ Yes, via `country` and `state`. Answers and cited sources differ by region on lo
 
 ## Other cloro scrapers
 
-[AI Mode](https://cloro.dev/ai-mode/) · [AI Overview](https://cloro.dev/ai-overview/) · [ChatGPT](https://cloro.dev/chatgpt/) · [Copilot](https://cloro.dev/copilot/) · [Gemini](https://cloro.dev/gemini/) · [Google Search](https://cloro.dev/google-search/) · [Google News](https://cloro.dev/google-news/) · [Grok](https://cloro.dev/grok/)
+[AI Mode](https://cloro.dev/ai-mode/) · [AI Overview](https://cloro.dev/ai-overview/) · [ChatGPT](https://cloro.dev/chatgpt/) · [Copilot](https://cloro.dev/copilot/) · [Gemini](https://cloro.dev/gemini/) · [Google Search](https://cloro.dev/google-search/) · [Google News](https://cloro.dev/google-news/)
 
 ## Contact us
 
