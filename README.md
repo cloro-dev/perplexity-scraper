@@ -6,6 +6,8 @@
 
 The [Perplexity scraper](https://cloro.dev/perplexity/?utm_source=github) by cloro is an API that returns the Perplexity answers and sources its UI shows, as structured JSON: the answer text and markdown, every cited web source with position and label, the related queries Perplexity suggests, and the search-model queries it ran to build the answer.
 
+> **Perplexity scraper is discontinued.** Perplexity blocks access for logged-out sessions. Requests to `/v1/monitor/perplexity` and async tasks with `taskType` `PERPLEXITY` fail with a `400` (`MODEL_UNAVAILABLE`) and cost no credits. The [providers guide](https://cloro.dev/docs/guides/providers#unsupported-providers) has the details.
+
 ## How do you scrape Perplexity?
 
 1. Get an API key at [cloro.dev](https://cloro.dev/?utm_source=github&utm_medium=readme).
@@ -118,7 +120,7 @@ Yes, via `country` and `state`. Answers and cited sources differ by region on lo
 
 ## Other cloro scrapers
 
-[AI Mode](https://cloro.dev/ai-mode/) · [AI Overview](https://cloro.dev/ai-overview/) · [ChatGPT](https://cloro.dev/chatgpt/) · [Copilot](https://cloro.dev/copilot/) · [Gemini](https://cloro.dev/gemini/) · [Google Search](https://cloro.dev/google-search/) · [Google News](https://cloro.dev/google-news/)
+[AI Mode](https://cloro.dev/ai-mode/) · [AI Overview](https://cloro.dev/ai-overview/) · [ChatGPT](https://cloro.dev/chatgpt/) · [Gemini](https://cloro.dev/gemini/) · [Google Search](https://cloro.dev/google-search/) · [Google News](https://cloro.dev/google-news/)
 
 ## Contact us
 
