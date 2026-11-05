@@ -99,7 +99,7 @@ Full field-level schemas are in the [endpoint reference](https://cloro.dev/docs/
 
 ### Is there an API that returns Perplexity's UI answer rather than its model API?
 
-Yes. cloro returns what the Perplexity product shows a user, including the cited source list and the related queries. The official Perplexity API answers a prompt with a model and does not expose them the same way.
+Not from cloro any more. The cloro scraper returned what the Perplexity product shows a user, including the cited source list and the related queries, until Perplexity blocked logged-out sessions. The official Perplexity API answers a prompt with a model and does not expose them the same way.
 
 ### What are search-model queries?
 
